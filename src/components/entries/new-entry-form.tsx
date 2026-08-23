@@ -119,112 +119,150 @@ export function NewEntryForm({ userId, defaultStartStock }: NewEntryFormProps) {
   };
 
   return (
-    <form className="entry-form-panel" onSubmit={handleSubmit}>
-      <div className="entry-grid two-up">
-        <label className="field">
-          날짜
-          <input onChange={(event) => setEntryDate(event.target.value)} required type="date" value={entryDate} />
-        </label>
-        <label className="field">
-          제목
-          <input
-            maxLength={60}
-            onChange={(event) => setTitle(event.target.value)}
-            placeholder="예: 수요일 저녁 훈련"
-            required
-            value={title}
-          />
-        </label>
-      </div>
-
-      <label className="field">
-        장소 / 메모
-        <input
-          maxLength={80}
-          onChange={(event) => setLocation(event.target.value)}
-          placeholder="예: 시청 체육관 A코트"
-          value={location}
-        />
-      </label>
-
-      <div className="entry-grid stock-grid">
-        <label className="field">
-          시작 수량
-          <input
-            min={0}
-            onChange={(event) => setStartStock(Number(event.target.value) || 0)}
-            required
-            type="number"
-            value={startStock}
-          />
-        </label>
-        <label className="field">
-          입고 수량
-          <input
-            min={0}
-            onChange={(event) => setAddedStock(Number(event.target.value) || 0)}
-            required
-            type="number"
-            value={addedStock}
-          />
-        </label>
-        <label className="field">
-          사용 수량
-          <input
-            min={0}
-            onChange={(event) => setUsedStock(Number(event.target.value) || 0)}
-            required
-            type="number"
-            value={usedStock}
-          />
-        </label>
-        <label className="field">
-          종료 수량
-          <input readOnly type="number" value={endStock} />
-        </label>
-      </div>
-
-      <label className="field">
-        상세 메모
-        <textarea
-          maxLength={300}
-          onChange={(event) => setNotes(event.target.value)}
-          placeholder="컨디션, 사용한 셔틀콕 상태, 구매 사유 등을 남겨두세요."
-          rows={5}
-          value={notes}
-        />
-      </label>
-
-      <label className="field">
-        사진 업로드
-        <input
-          accept="image/*"
-          multiple
-          onChange={(event) => {
-            const selectedFiles = Array.from(event.target.files ?? []).slice(0, MAX_FILES);
-            setFiles(selectedFiles);
-          }}
-          type="file"
-        />
-      </label>
-
-      <p className="auth-help">사진은 최대 {MAX_FILES}장까지 가능하며, 업로드 전에 자동으로 축소/압축됩니다.</p>
-
-      {files.length > 0 ? (
-        <div className="file-pill-list">
-          {files.map((file) => (
-            <span className="file-pill" key={`${file.name}-${file.lastModified}`}>
-              {file.name}
-            </span>
-          ))}
+    <form className="entry-mobile-form" onSubmit={handleSubmit}>
+      <section className="entry-mobile-summary-card">
+        <div>
+          <span>시작 재고</span>
+          <strong>{startStock}</strong>
         </div>
-      ) : null}
+        <div className="entry-summary-divider" />
+        <div>
+          <span>예상 종료</span>
+          <strong>{endStock}</strong>
+        </div>
+      </section>
 
-      <button className="primary-action" disabled={isSubmitting} type="submit">
-        {isSubmitting ? "저장 중..." : "기록 저장"}
-      </button>
+      <section className="entry-section-card">
+        <div className="entry-section-heading">
+          <h2>기본 정보</h2>
+          <p>언제, 어떤 기록인지 먼저 정리합니다.</p>
+        </div>
+
+        <div className="entry-grid two-up">
+          <label className="field">
+            날짜
+            <input onChange={(event) => setEntryDate(event.target.value)} required type="date" value={entryDate} />
+          </label>
+          <label className="field">
+            제목
+            <input
+              maxLength={60}
+              onChange={(event) => setTitle(event.target.value)}
+              placeholder="예: 수요일 저녁 훈련"
+              required
+              value={title}
+            />
+          </label>
+        </div>
+
+        <label className="field">
+          장소 / 메모
+          <input
+            maxLength={80}
+            onChange={(event) => setLocation(event.target.value)}
+            placeholder="예: 시청 체육관 A코트"
+            value={location}
+          />
+        </label>
+      </section>
+
+      <section className="entry-section-card">
+        <div className="entry-section-heading">
+          <h2>수량 입력</h2>
+          <p>시작, 입고, 사용 수량을 넣으면 종료 수량이 자동 계산됩니다.</p>
+        </div>
+
+        <div className="entry-grid stock-grid mobile-stock-grid">
+          <label className="field compact-field">
+            <span>시작</span>
+            <input
+              min={0}
+              onChange={(event) => setStartStock(Number(event.target.value) || 0)}
+              required
+              type="number"
+              value={startStock}
+            />
+          </label>
+          <label className="field compact-field">
+            <span>입고</span>
+            <input
+              min={0}
+              onChange={(event) => setAddedStock(Number(event.target.value) || 0)}
+              required
+              type="number"
+              value={addedStock}
+            />
+          </label>
+          <label className="field compact-field">
+            <span>사용</span>
+            <input
+              min={0}
+              onChange={(event) => setUsedStock(Number(event.target.value) || 0)}
+              required
+              type="number"
+              value={usedStock}
+            />
+          </label>
+          <label className="field compact-field readonly-field">
+            <span>종료</span>
+            <input readOnly type="number" value={endStock} />
+          </label>
+        </div>
+      </section>
+
+      <section className="entry-section-card">
+        <div className="entry-section-heading">
+          <h2>메모와 사진</h2>
+          <p>현장 상황이나 셔틀 상태를 함께 남겨두면 나중에 보기 편합니다.</p>
+        </div>
+
+        <label className="field">
+          상세 메모
+          <textarea
+            maxLength={300}
+            onChange={(event) => setNotes(event.target.value)}
+            placeholder="컨디션, 사용한 셔틀콕 상태, 구매 사유 등을 남겨두세요."
+            rows={5}
+            value={notes}
+          />
+        </label>
+
+        <label className="field upload-field-clean">
+          <span>사진 업로드</span>
+          <input
+            accept="image/*"
+            multiple
+            onChange={(event) => {
+              const selectedFiles = Array.from(event.target.files ?? []).slice(0, MAX_FILES);
+              setFiles(selectedFiles);
+            }}
+            type="file"
+          />
+          <small>최대 {MAX_FILES}장 · 업로드 전에 자동으로 축소/압축됩니다.</small>
+        </label>
+
+        {files.length > 0 ? (
+          <div className="file-pill-list clean-pill-list">
+            {files.map((file) => (
+              <span className="file-pill clean-pill" key={`${file.name}-${file.lastModified}`}>
+                {file.name}
+              </span>
+            ))}
+          </div>
+        ) : null}
+      </section>
 
       {message ? <p className="auth-message">{message}</p> : null}
+
+      <div className="entry-submit-dock">
+        <div>
+          <span>저장 후 즉시 게시판 반영</span>
+          <strong>{isSubmitting ? "처리 중..." : `종료 수량 ${endStock}`}</strong>
+        </div>
+        <button className="primary-action entry-submit-button" disabled={isSubmitting} type="submit">
+          {isSubmitting ? "저장 중..." : "기록 저장"}
+        </button>
+      </div>
     </form>
   );
 }

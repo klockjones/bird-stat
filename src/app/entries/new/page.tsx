@@ -23,25 +23,22 @@ export default async function NewEntryPage() {
     .maybeSingle();
 
   return (
-    <main className="simple-page">
-      <section className="route-card">
-        <div className="protected-header">
-          <div>
-            <span className="route-chip">/entries/new</span>
-            <h1>인증된 신규 기록 화면</h1>
-          </div>
-          <SignOutButton />
-        </div>
-        <p className="session-note">현재 로그인 사용자: {user.email}</p>
-        <p className="auth-help">
-          기록의 소유권은 항상 현재 로그인한 사용자 `auth.uid()`로 저장됩니다. 저장 후에는{" "}
-          <Link className="route-link" href="/dashboard">
-            /dashboard
-          </Link>
-          에서 전체 기록을 확인할 수 있습니다.
-        </p>
-        <NewEntryForm defaultStartStock={latestEntry?.end_stock ?? 0} userId={user.id} />
+    <main className="entry-mobile-shell">
+      <section className="entry-mobile-topbar">
+        <Link className="entry-back-link" href="/dashboard">
+          ← 대시보드
+        </Link>
+        <SignOutButton />
       </section>
+
+      <section className="entry-mobile-intro">
+        <span className="route-chip">새 기록</span>
+        <h1>셔틀콕 사용 기록</h1>
+        <p className="session-note">현재 로그인 사용자: {user.email}</p>
+        <p className="auth-help">하나의 기록에 수량 변화와 사진 메모를 함께 남깁니다. 저장되면 전체 운영 보드에 바로 반영됩니다.</p>
+      </section>
+
+      <NewEntryForm defaultStartStock={latestEntry?.end_stock ?? 0} userId={user.id} />
     </main>
   );
 }
