@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "sodfujxpthupbkmkibzm.supabase.co",
         pathname: "/storage/v1/object/sign/entry-photos/**",
       },
+      {
+        protocol: "https",
+        hostname: "encrypted-tbn0.gstatic.com",
+        pathname: "/images/**",
+      },
     ],
   },
 };
