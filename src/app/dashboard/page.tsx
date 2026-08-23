@@ -1,13 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { SignOutButton } from "@/components/auth/sign-out-button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-
-type EntryPhotoRow = {
-  id: string;
-  storage_path: string;
-};
 
 type EntryRow = {
   id: string;
@@ -22,17 +16,8 @@ type EntryRow = {
   notes: string | null;
   created_at: string;
   profiles: { display_name: string } | null;
-  entry_photos: EntryPhotoRow[] | null;
+  entry_photos: { id: string; storage_path: string }[] | null;
 };
-
-function formatDateLabel(date: string) {
-  return new Intl.DateTimeFormat("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    weekday: "short",
-  }).format(new Date(date));
-}
 
 export default async function DashboardPage() {
   const supabase = await createSupabaseServerClient();
@@ -57,145 +42,69 @@ export default async function DashboardPage() {
   }
 
   const entries = (entriesData ?? []) as unknown as EntryRow[];
-  const photoPaths = entries.flatMap((entry) => entry.entry_photos?.map((photo) => photo.storage_path) ?? []);
-  const uniquePhotoPaths = [...new Set(photoPaths)];
-  const signedUrlMap = new Map<string, string>();
-
-  if (uniquePhotoPaths.length > 0) {
-    const { data: signedData } = await supabase.storage.from("entry-photos").createSignedUrls(uniquePhotoPaths, 60 * 60);
-
-    signedData?.forEach((item, index) => {
-      if (item?.signedUrl) {
-        signedUrlMap.set(uniquePhotoPaths[index], item.signedUrl);
-      }
-    });
-  }
-
-  const groupedEntries = entries.reduce<Record<string, EntryRow[]>>((groups, entry) => {
-    groups[entry.entry_date] ??= [];
-    groups[entry.entry_date].push(entry);
-    return groups;
-  }, {});
-
   const currentStock = entries[0]?.end_stock ?? 0;
   const totalAdded = entries.reduce((sum, entry) => sum + entry.added_stock, 0);
   const totalUsed = entries.reduce((sum, entry) => sum + entry.used_stock, 0);
 
   return (
-    <main className="dashboard-shell">
-      <section className="hero-card dashboard-hero">
-        <div className="protected-header">
+    <main className="dashboard-mobile-shell">
+      <section className="dashboard-mobile-hero dashboard-soft-hero">
+        <div className="dashboard-mobile-topbar">
           <div>
-            <span className="route-chip">/dashboard</span>
-            <h1>셔틀콕 기록 게시판</h1>
+            <p className="dashboard-mobile-kicker">Today</p>
+            <h1>운영 대시보드</h1>
           </div>
           <SignOutButton />
         </div>
 
-        <p className="session-note">현재 로그인 사용자: {user.email}</p>
+        <div className="dashboard-mobile-balance">
+          <span>현재 운영 중인 셔틀콕</span>
+          <strong>{currentStock}</strong>
+          <p>최근 기록 기준으로 남아 있는 수량입니다.</p>
+        </div>
 
-        <div className="summary-grid dashboard-summary">
-          <article className="summary-card-panel">
+        <div className="dashboard-mobile-mini-stats soft-mini-stats">
+          <article>
             <span>현재 재고</span>
             <strong>{currentStock}</strong>
           </article>
-          <article className="summary-card-panel">
-            <span>총 입고</span>
+          <article>
+            <span>입고</span>
             <strong>{totalAdded}</strong>
           </article>
-          <article className="summary-card-panel">
-            <span>총 사용</span>
+          <article>
+            <span>사용</span>
             <strong>{totalUsed}</strong>
           </article>
-          <article className="summary-card-panel">
-            <span>기록 수</span>
+          <article>
+            <span>기록</span>
             <strong>{entries.length}</strong>
           </article>
         </div>
-
-        <p>
-          신규 기록은 <Link className="route-link" href="/entries/new">/entries/new</Link> 에서 추가할 수 있습니다.
-        </p>
       </section>
 
-      {entries.length === 0 ? (
-        <section className="route-card empty-board">
-          <h2>아직 기록이 없습니다.</h2>
-          <p>첫 기록을 추가하면 날짜별로 이 게시판에 자동 정리됩니다.</p>
-        </section>
-      ) : (
-        Object.entries(groupedEntries).map(([date, dateEntries]) => (
-          <section className="date-section" key={date}>
-            <div className="date-section-header">
-              <div>
-                <h2>{formatDateLabel(date)}</h2>
-                <p>{dateEntries.length}개 기록</p>
-              </div>
-            </div>
-
-            <div className="entry-card-list">
-              {dateEntries.map((entry) => (
-                <article className="entry-card" key={entry.id}>
-                  <div className="entry-card-header">
-                    <div>
-                      <h3>{entry.title}</h3>
-                      <p>
-                        작성자: {entry.profiles?.display_name ?? "이름 없음"}
-                        {entry.location ? ` · ${entry.location}` : ""}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="entry-stats">
-                    <div>
-                      <span>시작</span>
-                      <strong>{entry.start_stock}</strong>
-                    </div>
-                    <div>
-                      <span>입고</span>
-                      <strong>{entry.added_stock}</strong>
-                    </div>
-                    <div>
-                      <span>사용</span>
-                      <strong>{entry.used_stock}</strong>
-                    </div>
-                    <div>
-                      <span>종료</span>
-                      <strong>{entry.end_stock}</strong>
-                    </div>
-                  </div>
-
-                  <p className="entry-notes">{entry.notes ?? "상세 메모 없음"}</p>
-
-                  {entry.entry_photos && entry.entry_photos.length > 0 ? (
-                    <div className="entry-photo-grid">
-                      {entry.entry_photos.map((photo) => {
-                        const signedUrl = signedUrlMap.get(photo.storage_path);
-
-                        if (!signedUrl) {
-                          return null;
-                        }
-
-                        return (
-                          <Image
-                            alt="셔틀콕 기록 사진"
-                            className="entry-photo"
-                            height={120}
-                            key={photo.id}
-                            src={signedUrl}
-                            unoptimized
-                            width={120}
-                          />
-                        );
-                      })}
-                    </div>
-                  ) : null}
-                </article>
-              ))}
-            </div>
-          </section>
-        ))
-      )}
+      <section className="dashboard-action-grid soft-action-grid">
+        <Link className="dashboard-action-card" href="/entries/new">
+          <span className="dashboard-action-icon">＋</span>
+          <strong>신규 등록</strong>
+          <small>수량과 사진 기록 추가</small>
+        </Link>
+        <Link className="dashboard-action-card" href="/stats">
+          <span className="dashboard-action-icon">↗</span>
+          <strong>사용 통계</strong>
+          <small>입고와 사용 흐름 보기</small>
+        </Link>
+        <Link className="dashboard-action-card" href="/board">
+          <span className="dashboard-action-icon">≣</span>
+          <strong>History</strong>
+          <small>등록 내용 한줄 목록</small>
+        </Link>
+        <Link className="dashboard-action-card" href="/users">
+          <span className="dashboard-action-icon">◎</span>
+          <strong>사용자 정보</strong>
+          <small>운영 사용자 확인</small>
+        </Link>
+      </section>
     </main>
   );
 }
