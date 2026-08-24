@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Gowun_Batang, Noto_Sans_KR } from "next/font/google";
+import { Hahmlet, IBM_Plex_Sans_KR } from "next/font/google";
 import "./globals.css";
 
-const bodyFont = Noto_Sans_KR({
+const bodyFont = IBM_Plex_Sans_KR({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
 });
 
-const headingFont = Gowun_Batang({
+const headingFont = Hahmlet({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["400", "700"],
