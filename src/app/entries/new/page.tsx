@@ -33,9 +33,9 @@ export default async function NewEntryPage() {
 
       <section className="entry-mobile-intro">
         <span className="route-chip">새 기록</span>
-        <h1>셔틀콕 사용 기록</h1>
+        <h1>새 운영 기록</h1>
         <p className="session-note">현재 로그인 사용자: {user.email}</p>
-        <p className="auth-help">하나의 기록에 수량 변화와 사진 메모를 함께 남깁니다. 저장되면 전체 운영 보드에 바로 반영됩니다.</p>
+        <p className="auth-help">한 번의 입력으로 날짜, 수량, 사진 메모를 함께 저장하고 즉시 히스토리에 반영합니다.</p>
       </section>
 
       <NewEntryForm defaultStartStock={latestEntry?.end_stock ?? 0} userId={user.id} />

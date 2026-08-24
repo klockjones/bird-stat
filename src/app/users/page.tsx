@@ -21,12 +21,12 @@ export default async function UsersPage() {
   const typedProfiles = (profiles ?? []) as ProfileRow[];
 
   return (
-    <main className="simple-page">
-      <section className="route-card">
-        <div className="protected-header">
+    <main className="ios-subpage-shell">
+      <section className="ios-subpage-card">
+        <div className="ios-subpage-topbar">
           <div>
-            <span className="route-chip">/users</span>
-            <h1>운영 사용자</h1>
+            <span className="route-chip">Users</span>
+            <h1 className="ios-subpage-title">운영 사용자</h1>
           </div>
           <SignOutButton />
         </div>

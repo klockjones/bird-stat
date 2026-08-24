@@ -44,12 +44,12 @@ export default async function BoardPage() {
   const entries = (entriesData ?? []) as unknown as EntryRow[];
 
   return (
-    <main className="simple-page">
-      <section className="route-card">
-        <div className="protected-header">
+    <main className="ios-subpage-shell">
+      <section className="ios-subpage-card">
+        <div className="ios-subpage-topbar">
           <div>
-            <span className="route-chip">/board</span>
-            <h1>History</h1>
+            <span className="route-chip">History</span>
+            <h1 className="ios-subpage-title">등록 히스토리</h1>
           </div>
           <SignOutButton />
         </div>
@@ -59,7 +59,7 @@ export default async function BoardPage() {
             <p>아직 기록이 없습니다. 신규 등록에서 첫 기록을 추가해 보세요.</p>
           </div>
         ) : (
-          <div className="history-list">
+          <div className="history-list ios-history-list">
             <div className="history-table-header">
               <span>날짜</span>
               <span>제목</span>

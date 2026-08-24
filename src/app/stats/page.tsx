@@ -57,33 +57,33 @@ export default async function StatsPage() {
   const maxUsed = Math.max(...monthlyStats.map((month) => month.used), 1);
 
   return (
-    <main className="simple-page">
-      <section className="route-card">
-        <div className="protected-header">
+    <main className="ios-subpage-shell">
+      <section className="ios-subpage-card">
+        <div className="ios-subpage-topbar">
           <div>
-            <span className="route-chip">/stats</span>
-            <h1>사용 통계</h1>
+            <span className="route-chip">Stats</span>
+            <h1 className="ios-subpage-title">사용 통계</h1>
           </div>
           <SignOutButton />
         </div>
 
-        <div className="summary-grid dashboard-summary">
-          <article className="summary-card-panel">
+        <div className="ios-stat-grid secondary-stat-grid">
+          <article className="ios-stat-card">
             <span>현재 재고</span>
             <strong>{latestStock}</strong>
           </article>
-          <article className="summary-card-panel">
+          <article className="ios-stat-card">
             <span>총 입고</span>
             <strong>{totalAdded}</strong>
           </article>
-          <article className="summary-card-panel">
+          <article className="ios-stat-card">
             <span>총 사용</span>
             <strong>{totalUsed}</strong>
           </article>
         </div>
 
         <section className="stats-panel">
-          <div className="dashboard-section-header">
+          <div className="ios-section-header">
             <div>
               <p className="eyebrow">3 Months</p>
               <h2>최근 3개월 사용량</h2>
