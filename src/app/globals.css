@@ -112,6 +112,248 @@ h3 {
   gap: 18px;
 }
 
+.ios-home-shell {
+  width: min(520px, calc(100% - 20px));
+  margin: 0 auto;
+  padding: 18px 0 118px;
+  display: grid;
+  gap: 18px;
+}
+
+.ios-home-topbar,
+.ios-home-meta,
+.ios-hero-meter-caption,
+.ios-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ios-home-date {
+  color: rgba(40, 49, 64, 0.55);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.ios-home-title {
+  margin-top: 8px;
+  font-family: var(--font-body), "IBM Plex Sans KR", sans-serif;
+  font-size: clamp(2.2rem, 8vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.ios-user-badge {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(151, 194, 255, 0.95), rgba(121, 128, 255, 0.95));
+  color: #fff;
+  font-weight: 700;
+}
+
+.ios-home-hero-card,
+.ios-stat-card,
+.ios-action-section,
+.ios-bottom-nav {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(117, 129, 158, 0.08);
+  box-shadow: 0 10px 28px rgba(117, 129, 158, 0.08);
+}
+
+.ios-home-hero-card,
+.ios-action-section {
+  border-radius: 28px;
+}
+
+.ios-home-hero-card {
+  padding: 22px 20px;
+  display: grid;
+  gap: 18px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.72), transparent 30%),
+    linear-gradient(180deg, rgba(237, 245, 255, 0.98) 0%, rgba(247, 250, 255, 0.96) 100%);
+}
+
+.ios-hero-label {
+  color: rgba(40, 49, 64, 0.62);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.ios-hero-value {
+  display: block;
+  margin: 6px 0 8px;
+  font-family: var(--font-body), "IBM Plex Sans KR", sans-serif;
+  font-size: clamp(3.4rem, 13vw, 4.8rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  color: #202a37;
+}
+
+.ios-hero-copy p,
+.ios-section-header span,
+.ios-action-row p,
+.ios-hero-meter-caption span {
+  color: rgba(40, 49, 64, 0.58);
+}
+
+.ios-hero-meter {
+  display: grid;
+  gap: 8px;
+}
+
+.ios-hero-meter-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(128, 181, 255, 0.16);
+  overflow: hidden;
+}
+
+.ios-hero-meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #8ed0ff, #7d89ff);
+}
+
+.ios-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ios-stat-card {
+  padding: 16px 14px;
+  border-radius: 22px;
+  display: grid;
+  gap: 6px;
+}
+
+.ios-stat-card span {
+  color: rgba(40, 49, 64, 0.55);
+  font-size: 0.82rem;
+}
+
+.ios-stat-card strong {
+  font-family: var(--font-body), "IBM Plex Sans KR", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #202a37;
+}
+
+.ios-action-section {
+  padding: 18px;
+  display: grid;
+  gap: 16px;
+}
+
+.ios-section-header h2 {
+  font-family: var(--font-body), "IBM Plex Sans KR", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ios-action-list {
+  display: grid;
+  gap: 12px;
+}
+
+.ios-action-row {
+  padding: 14px 14px;
+  border-radius: 22px;
+  background: rgba(243, 248, 255, 0.9);
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.ios-action-row-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.ios-action-row-icon.add {
+  background: linear-gradient(180deg, #7d8fff, #5f6fe8);
+}
+
+.ios-action-row-icon.trend {
+  background: linear-gradient(180deg, #7fc8ff, #55a5f8);
+}
+
+.ios-action-row-icon.board {
+  background: linear-gradient(180deg, #c1a6ff, #9b83f0);
+}
+
+.ios-action-row-icon.users {
+  background: linear-gradient(180deg, #ffb7c3, #f191ac);
+}
+
+.ios-action-row strong {
+  display: block;
+  font-size: 1rem;
+  color: #202a37;
+}
+
+.ios-bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  width: min(520px, calc(100% - 20px));
+  padding: 10px 12px;
+  border-radius: 28px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: end;
+  gap: 8px;
+  backdrop-filter: blur(18px);
+}
+
+.ios-bottom-item {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  color: rgba(40, 49, 64, 0.5);
+  font-size: 0.82rem;
+}
+
+.ios-bottom-item span {
+  font-size: 1.12rem;
+}
+
+.ios-bottom-item.active {
+  color: #202a37;
+  font-weight: 700;
+}
+
+.ios-bottom-item.center {
+  width: 52px;
+  height: 52px;
+  align-self: center;
+  justify-self: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #7d8fff, #5f6fe8);
+  color: #fff;
+  place-items: center;
+  box-shadow: 0 16px 28px rgba(95, 111, 232, 0.28);
+}
+
+.ios-bottom-item.center small {
+  display: none;
+}
+
 .hero-card,
 .route-card,
 .entry-card,
@@ -1104,6 +1346,14 @@ h3 {
   .dashboard-mobile-mini-stats,
   .dashboard-action-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ios-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ios-bottom-nav {
+    width: calc(100% - 20px);
   }
 
   .users-grid-list {
