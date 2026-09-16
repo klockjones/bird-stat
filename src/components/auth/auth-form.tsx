@@ -13,12 +13,19 @@ export function AuthForm() {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit: NonNullable<ComponentProps<"form">["onSubmit"]> = async (event) => {
     event.preventDefault();
     setMessage(null);
+
+    if (mode === "sign-up" && password !== passwordConfirm) {
+      setMessage("비밀번호가 일치하지 않습니다. 다시 확인해 주세요.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -53,6 +60,7 @@ export function AuthForm() {
       setMessage("회원가입이 완료되었습니다. 이메일 인증 설정이 켜져 있다면 메일을 확인한 뒤 로그인해 주세요.");
       setMode("sign-in");
       setPassword("");
+      setPasswordConfirm("");
     } finally {
       setIsSubmitting(false);
     }
@@ -114,6 +122,21 @@ export function AuthForm() {
           value={password}
         />
       </label>
+
+      {mode === "sign-up" ? (
+        <label className="field">
+          비밀번호 확인
+          <input
+            autoComplete="new-password"
+            minLength={6}
+            onChange={(event) => setPasswordConfirm(event.target.value)}
+            placeholder="비밀번호를 한 번 더 입력하세요"
+            required
+            type="password"
+            value={passwordConfirm}
+          />
+        </label>
+      ) : null}
 
       <button className="primary-action" disabled={isSubmitting} type="submit">
         {isSubmitting ? "처리 중..." : mode === "sign-in" ? "로그인" : "회원가입"}
