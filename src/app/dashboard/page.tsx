@@ -105,7 +105,14 @@ export default async function DashboardPage() {
             <span className="ios-action-row-icon add">＋</span>
             <div>
               <strong>신규 등록</strong>
-              <p>수량과 사진 기록 추가</p>
+              <p>입고·사용 전체 기록 추가</p>
+            </div>
+          </Link>
+          <Link className="ios-action-row" href="/entries/use">
+            <span className="ios-action-row-icon use">▷</span>
+            <div>
+              <strong>사용 기록</strong>
+              <p>사용 수량 빠르게 기록</p>
             </div>
           </Link>
           <Link className="ios-action-row" href="/stats">

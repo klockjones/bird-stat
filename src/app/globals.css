@@ -424,6 +424,10 @@ h3 {
   background: linear-gradient(180deg, #7d8fff, #5f6fe8);
 }
 
+.ios-action-row-icon.use {
+  background: linear-gradient(180deg, #ffb066, #f07a2a);
+}
+
 .ios-action-row-icon.trend {
   background: linear-gradient(180deg, #7fc8ff, #55a5f8);
 }
@@ -434,6 +438,11 @@ h3 {
 
 .ios-action-row-icon.users {
   background: linear-gradient(180deg, #ffb7c3, #f191ac);
+}
+
+/* 잔량 0일 때 빨간색 강조 */
+.use-stock-zero {
+  color: #e04a4a;
 }
 
 .ios-action-row strong {
